@@ -1,7 +1,10 @@
 import React from 'react';
+import Thread from './features/Thread/Thread';
 
 const App = () => (
-  <div></div>
+  <div>
+    <Thread />
+  </div>
 );
 
 export default App;

@@ -40,7 +40,7 @@ const FileInput: React.FC<Props> = ({onChange, name, label}) => {
       <Button
         variant="contained"
         onClick={activateInput}
-        sx={{ textTransform: 'none', width: 100 }}
+        sx={{ textTransform: 'none', width: 100, height: 53, overflow: 'hidden' }}
       >
         { filename || 'Browse' }
       </Button>

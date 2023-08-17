@@ -3,6 +3,8 @@ import { Box, Button, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import FileInput from '../UI/FileInput/FileInput';
 import { IMessageMutation } from '../../types';
+import { useAppDispatch } from '../../app/hook';
+import { postOne } from '../../features/Thread/threadThunk';
 
 const initialState: IMessageMutation = {
   author: '',
@@ -11,6 +13,7 @@ const initialState: IMessageMutation = {
 };
 
 const ThreadForm = () => {
+  const dispatch = useAppDispatch();
   const [state, setState] = useState<IMessageMutation>(initialState);
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,10 +22,17 @@ const ThreadForm = () => {
     setState(prevState => ({ ...prevState, [name]: files ? files[0] : value }));
   };
 
+  const sendData = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await dispatch(postOne(state));
+  };
+
   return (
     <Box component="form"
          display="flex"
          gap={2}
+         onSubmit={sendData}
     >
       <TextField
         name="author"
@@ -41,6 +51,7 @@ const ThreadForm = () => {
       <Button
         variant="outlined"
         sx={{ height: 50 }}
+        type="submit"
       >
         <SendIcon />
       </Button>

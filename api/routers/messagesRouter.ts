@@ -1,4 +1,5 @@
 import express from "express";
+import { imagesUpload } from "../multer";
 import fileDb from "../fileDb";
 import { TMessageWithoutId } from "../types";
 
@@ -10,7 +11,7 @@ messagesRouter.get('/', async (req, res) => {
   res.send(messages);
 });
 
-messagesRouter.post('/', async (req, res) => {
+messagesRouter.post('/', imagesUpload.single('image'), async (req, res) => {
   if (!req.body.message) {
     return res.status(400).send({ "error": "Missing message field" });
   }
@@ -18,7 +19,7 @@ messagesRouter.post('/', async (req, res) => {
   const message: TMessageWithoutId = {
     author: req.body.author || null,
     message: req.body.message,
-    image: req.body.image || null,
+    image: req.file ? 'images/' + req.file.filename : null,
   };
 
   const id = await fileDb.addItem(message);

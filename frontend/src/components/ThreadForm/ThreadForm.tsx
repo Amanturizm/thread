@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, styled, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import FileInput from '../UI/FileInput/FileInput';
-import { IMessageMutation } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { fetchALl, postOne } from '../../features/Thread/threadThunk';
+import FileInput from '../UI/FileInput/FileInput';
 import ThreadAlert from '../UI/ThreadAlert/ThreadAlert';
+import { IMessageMutation } from '../../types';
+
+const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#A0AAB4',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#B2BAC2',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#E0E3E7',
+    },
+    '&:hover fieldset': {
+      borderColor: '#B2BAC2',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#6F7E8C',
+    },
+  },
+  input: {
+    color: '#E0E3E7'
+  },
+  label: {
+    color: '#E0E3E7'
+  }
+});
 
 const initialState: IMessageMutation = {
   author: '',
@@ -49,13 +75,13 @@ const ThreadForm = () => {
          gap={2}
          onSubmit={sendData}
     >
-      <TextField
+      <CssTextField
         name="author"
         label="Author"
         value={state.author}
         onChange={changeValue}
       />
-      <TextField
+      <CssTextField
         name="message"
         label="Message"
         value={state.message}

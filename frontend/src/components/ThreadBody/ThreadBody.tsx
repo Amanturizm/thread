@@ -1,7 +1,7 @@
 import React from 'react';
-import ThreadMessage from '../ThreadMessage/ThreadMessage';
 import { Box } from '@mui/material';
 import { useAppSelector } from '../../app/hook';
+import ThreadMessage from '../ThreadMessage/ThreadMessage';
 import Preloader from '../UI/Preloader/Preloader';
 
 const ThreadBody = () => {

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import { IMessage, IMessageMutation } from '../../types';
+
 export const fetchALl = createAsyncThunk<IMessage[]>(
   'thread/fetchAll',
   async () => {

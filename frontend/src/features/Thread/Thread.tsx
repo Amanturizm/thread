@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import ThreadForm from '../../components/ThreadForm/ThreadForm';
 import { Box } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { useAppDispatch } from '../../app/hook';
 import { fetchALl } from './threadThunk';
-import ThreadMessage from '../../components/ThreadMessage/ThreadMessage';
-import ThreadAlert from '../../components/UI/ThreadAlert/ThreadAlert';
-import './ThreadScrollbar.css';
 import ThreadBody from '../../components/ThreadBody/ThreadBody';
+import ThreadForm from '../../components/ThreadForm/ThreadForm';
+import './ThreadScrollbar.css';
 
 const Thread = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +19,7 @@ const Thread = () => {
       padding={2}
       margin="auto"
       sx={{ maxWidth: 600 }}
+      color="#ccc"
     >
       <Box
         component="div"

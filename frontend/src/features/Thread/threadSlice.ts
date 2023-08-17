@@ -1,6 +1,6 @@
-import { IMessage } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchALl, postOne } from './threadThunk';
+import { IMessage } from '../../types';
 
 interface State {
   messages: IMessage[];

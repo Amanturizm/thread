@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import FileInput from '../UI/FileInput/FileInput';
 import { IMessageMutation } from '../../types';
-import { useAppDispatch } from '../../app/hook';
-import { postOne } from '../../features/Thread/threadThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { fetchALl, postOne } from '../../features/Thread/threadThunk';
+import ThreadAlert from '../UI/ThreadAlert/ThreadAlert';
 
 const initialState: IMessageMutation = {
   author: '',
@@ -14,7 +15,10 @@ const initialState: IMessageMutation = {
 
 const ThreadForm = () => {
   const dispatch = useAppDispatch();
+  const { messagePostLoading } = useAppSelector(state => state.thread);
+
   const [state, setState] = useState<IMessageMutation>(initialState);
+  const [isAlert, setIsAlert] = useState<boolean>(false);
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -25,7 +29,18 @@ const ThreadForm = () => {
   const sendData = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!state.message.length) {
+      if (!isAlert) {
+        setIsAlert(true);
+
+        setTimeout(() => setIsAlert(false), 5000);
+      }
+      return;
+    }
+
     await dispatch(postOne(state));
+    setState({ ...initialState, author: state.author });
+    await dispatch(fetchALl());
   };
 
   return (
@@ -46,15 +61,25 @@ const ThreadForm = () => {
         value={state.message}
         onChange={changeValue}
       />
-      <FileInput onChange={changeValue} name="image" label="Browse" />
+
+      <FileInput onChange={changeValue} image={state.image} name="image" label="Browse" />
 
       <Button
         variant="outlined"
-        sx={{ height: 50 }}
+        sx={{ height: 50, cursor: messagePostLoading ? 'not-allowed' : 'pointer' }}
         type="submit"
+        disabled={messagePostLoading}
       >
-        <SendIcon />
+        {
+          messagePostLoading ?
+            <Box sx={{ display: 'flex' }}>
+              <CircularProgress size={30} />
+            </Box> :
+            <SendIcon />
+        }
       </Button>
+
+      {isAlert && <ThreadAlert />}
     </Box>
   );
 };

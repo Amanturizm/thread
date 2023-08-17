@@ -1,16 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@mui/material';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   label: string;
+  image: File | null;
 }
 
-const FileInput: React.FC<Props> = ({onChange, name, label}) => {
+const FileInput: React.FC<Props> = ({ onChange, name, label, image }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [filename, setFilename] = useState('');
+  const [filename, setFilename] = useState<string>('');
+
+  useEffect(() => {
+    if (image === null) {
+      setFilename('');
+    }
+  }, [image]);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

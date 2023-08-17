@@ -1,0 +1,21 @@
+.Thread-Alert {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 30px;
+  animation: showAndHideAlert 5s linear;
+}
+
+@keyframes showAndHideAlert {
+  0% {
+    opacity: 0;
+    scale: .5;
+  }
+  7.5%, 80% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

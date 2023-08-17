@@ -1,0 +1,8 @@
+#thread ::-webkit-scrollbar {
+  width: .5rem;
+}
+
+#thread ::-webkit-scrollbar-thumb {
+  border-radius: 50px 200px 200px 50px;
+  background-color: #222;
+}

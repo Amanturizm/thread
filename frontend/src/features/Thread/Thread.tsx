@@ -4,10 +4,12 @@ import { Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { fetchALl } from './threadThunk';
 import ThreadMessage from '../../components/ThreadMessage/ThreadMessage';
+import ThreadAlert from '../../components/UI/ThreadAlert/ThreadAlert';
+import './ThreadScrollbar.css';
+import ThreadBody from '../../components/ThreadBody/ThreadBody';
 
 const Thread = () => {
   const dispatch = useAppDispatch();
-  const { messages } = useAppSelector(state => state.thread);
 
   useEffect(() => {
     dispatch(fetchALl());
@@ -20,17 +22,17 @@ const Thread = () => {
       margin="auto"
       sx={{ maxWidth: 600 }}
     >
-      <Box component="div"
-           display="flex"
-           flexDirection="column"
-           gap={1}
-           marginBottom={2}
-           border={1}
-           padding={2}
-           sx={{ maxHeight: 300, overflowY: 'auto' }}
+      <Box
+        component="div"
+        borderTop={2}
+        borderBottom={2}
+        borderRadius={3}
+        marginBottom={2}
+        id="thread"
       >
-        {messages.map(message => <ThreadMessage message={message} key={message.id} />)}
+        <ThreadBody />
       </Box>
+
       <ThreadForm />
     </Box>
   );
